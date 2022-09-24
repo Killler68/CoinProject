@@ -5,12 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.example.coinproject.common.viewmodel.ViewModelFactory
 import com.example.coinproject.databinding.FragmentListCoinBinding
+import com.example.coinproject.listcoin.item.ListCoinItem
+import com.example.coinproject.listcoin.viewmodel.ListCoinViewModel
+import com.mikepenz.fastadapter.GenericFastAdapter
+import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 
 class FragmentListCoin : Fragment() {
 
     private var _binding: FragmentListCoinBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: ListCoinViewModel by viewModels { ViewModelFactory() }
+
+    private val listCoinItemAdapter = ItemAdapter<ListCoinItem>()
+    private val fastAdapter = GenericFastAdapter.with(listOf(listCoinItemAdapter))
 
 
     override fun onCreateView(
@@ -20,4 +32,18 @@ class FragmentListCoin : Fragment() {
         .also { _binding = it }
         .root
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        with(binding.recyclerCoin) {
+            adapter = fastAdapter
+            itemAnimator = null
+        }
+        viewModel.resultData.observe(viewLifecycleOwner) {
+            FastAdapterDiffUtil[listCoinItemAdapter] = it.map { ListCoinItem(it) }
+
+        }
+        viewModel.loadCoin()
+
+    }
 }

@@ -54,7 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_eur"
-        tools:listitem="@layout/recycler_item_list_coin"/>
+        tools:listitem="@layout/recycler_item_list_coin" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
