@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.coinproject.common.fragment.getViewModelFactory
+import com.example.coinproject.common.fragment.navigateToFragment
 import com.example.coinproject.databinding.FragmentListCoinBinding
+import com.example.coinproject.informationcoin.FragmentInformationCoin
 import com.example.coinproject.listcoin.item.ListCoinItem
 import com.example.coinproject.listcoin.viewmodel.ListCoinViewModel
 import com.mikepenz.fastadapter.GenericFastAdapter
@@ -40,9 +42,19 @@ class FragmentListCoin : Fragment() {
             itemAnimator = null
         }
         viewModel.resultData.observe(viewLifecycleOwner) {
-            FastAdapterDiffUtil[listCoinItemAdapter] = it.map { ListCoinItem(it) }
-
+            FastAdapterDiffUtil[listCoinItemAdapter] = it.map {
+                ListCoinItem(
+                    it,
+                    ::onClick
+                )
+            }
         }
         viewModel.loadCoin()
+    }
+
+    private fun onClick(coinId: String) {
+        val fragmentPhoto = FragmentInformationCoin()
+        viewModel.coinsId(coinId)
+        navigateToFragment(fragmentPhoto)
     }
 }

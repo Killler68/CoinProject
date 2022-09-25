@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.coinproject.listcoin.model.CoinData
 import com.example.coinproject.listcoin.usecase.ListCoinUseCase
+import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.launch
 
 class ListCoinViewModel(
-    private val useCase: ListCoinUseCase
+    private val useCase: ListCoinUseCase,
+    private val coinEventBus: BehaviorSubject<String>
 ) : ViewModel() {
 
     private var _resultData: MutableLiveData<List<CoinData>> = MutableLiveData()
@@ -21,4 +23,9 @@ class ListCoinViewModel(
             _resultData.postValue(data)
         }
     }
+
+    fun coinsId(id: String) {
+        coinEventBus.onNext(id)
+    }
+
 }

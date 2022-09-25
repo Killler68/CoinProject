@@ -8,14 +8,21 @@ import com.example.coinproject.listcoin.model.CoinData
 import com.mikepenz.fastadapter.binding.AbstractBindingItem
 
 class ListCoinItem(
-    private val coinData: CoinData
+    private val coinData: CoinData,
+    private val onClick: (String) -> Unit
 ) : AbstractBindingItem<RecyclerItemListCoinBinding>() {
 
 
     override fun bindView(binding: RecyclerItemListCoinBinding, payloads: List<Any>) {
         super.bindView(binding, payloads)
 
+
         with(binding) {
+
+            backgroundCoinItem.setOnClickListener {
+                onClick(coinData.coinName)
+            }
+
             imageCoinItem.text = coinData.coinImage
             textCoinItem.text = coinData.coinName
             textCoinAbbreviatedItem.text = coinData.coinAbbreviated
