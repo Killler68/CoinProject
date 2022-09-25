@@ -53,8 +53,7 @@ class FragmentListCoin : Fragment() {
     }
 
     private fun onClick(coinId: String) {
-        val fragmentPhoto = FragmentInformationCoin()
-        viewModel.coinsId(coinId)
+        val fragmentPhoto = FragmentInformationCoin.create(coinId)
         navigateToFragment(fragmentPhoto)
     }
 }

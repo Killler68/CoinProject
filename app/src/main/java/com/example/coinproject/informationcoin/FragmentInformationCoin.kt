@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.coinproject.common.fragment.getViewModelFactory
@@ -12,12 +13,18 @@ import com.example.coinproject.databinding.FragmentInformationCoinBinding
 import com.example.coinproject.informationcoin.viewmodel.InformationCoinViewModel
 import com.example.coinproject.listcoin.FragmentListCoin
 
+const val coinIdKey = "coinIdKey"
+
 class FragmentInformationCoin : Fragment() {
 
     private var _binding: FragmentInformationCoinBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: InformationCoinViewModel by viewModels { getViewModelFactory() }
+
+    private val coinId by lazy {
+        arguments?.getString(coinIdKey)!!
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,10 +43,18 @@ class FragmentInformationCoin : Fragment() {
                 textCategoriesInformationCoin.text = it.coinCategory
             }
         }
-        viewModel.loadInformation()
+        viewModel.loadInformation(coinId)
 
         binding.imageBackInformationCoin.setOnClickListener {
             navigateToFragment(FragmentListCoin())
+        }
+    }
+
+    companion object {
+        fun create(id: String): FragmentInformationCoin {
+            val fragment = FragmentInformationCoin()
+            fragment.arguments = bundleOf(coinIdKey to id)
+            return fragment
         }
     }
 

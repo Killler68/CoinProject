@@ -15,7 +15,7 @@ class InformationCoinViewModel(
     private var _resultInformationCoin: MutableLiveData<InformationCoinData> = MutableLiveData()
     val resultInformationCoin: LiveData<InformationCoinData> get() = _resultInformationCoin
 
-    fun loadInformation() {
+    fun loadInformation(id: String) {
         viewModelScope.launch {
             _resultInformationCoin.postValue(useCase())
         }
