@@ -6,43 +6,62 @@
     android:layout_height="match_parent"
     tools:context=".listcoin.FragmentListCoin">
 
-    <TextView
-        android:id="@+id/text_list_coin"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="72dp"
-        android:text="Список криптовалют"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="117dp"
+        app:cardElevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btn_usd"
-        android:layout_width="89dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="255dp"
-        android:text="USD"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_list_coin" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_eur"
-        android:layout_width="89dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="113dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="158dp"
-        android:text="EUR"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_list_coin" />
+            <TextView
+                android:id="@+id/text_list_coin"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="72dp"
+                android:fontFamily="@font/roboto_medium"
+                android:src="@drawable/image_coin"
+                android:text="Список криптовалют"
+                android:textColor="#3E3E3E"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/btn_usd"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="255dp"
+                android:src="@drawable/image_btn_usd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_list_coin" />
+
+            <ImageView
+                android:id="@+id/btn_eur"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="113dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="158dp"
+                android:src="@drawable/image_btn_eur"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_list_coin" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_coin"
@@ -53,7 +72,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_eur"
+        app:layout_constraintTop_toBottomOf="@+id/card_view"
         tools:listitem="@layout/recycler_item_list_coin" />
 
 
