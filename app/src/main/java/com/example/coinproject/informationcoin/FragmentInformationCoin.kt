@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.example.coinproject.common.context.toast
 import com.example.coinproject.common.fragment.getViewModelFactory
 import com.example.coinproject.common.fragment.navigateToFragment
 import com.example.coinproject.databinding.FragmentInformationCoinBinding
@@ -38,10 +40,19 @@ class FragmentInformationCoin : Fragment() {
 
         viewModel.resultInformationCoin.observe(viewLifecycleOwner) {
             binding.apply {
-                textInformationCoin.text = it.coinName
-                textDescriptionInformationCoin.text = it.coinDescription
-                textCategoriesInformationCoin.text = it.coinCategory
+                textInformationCoin.text = it.name
+
+                Glide
+                    .with(view.rootView.context)
+                    .load(it.image)
+                    .into(binding.imageInformationCoin)
+
+                textDescriptionInformationCoin.text = it.description
+                textCategoriesInformationCoin.text = it.categories
             }
+        }
+        viewModel.internetError.observe(viewLifecycleOwner) {
+            context.toast(it)
         }
         viewModel.loadInformation(coinId)
 
@@ -57,5 +68,4 @@ class FragmentInformationCoin : Fragment() {
             return fragment
         }
     }
-
 }

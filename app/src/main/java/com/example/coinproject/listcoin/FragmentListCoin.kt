@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.coinproject.common.context.toast
 import com.example.coinproject.common.fragment.getViewModelFactory
 import com.example.coinproject.common.fragment.navigateToFragment
 import com.example.coinproject.databinding.FragmentListCoinBinding
@@ -48,6 +49,9 @@ class FragmentListCoin : Fragment() {
                     ::onClick
                 )
             }
+        }
+        viewModel.internetError.observe(viewLifecycleOwner) {
+            context.toast(it)
         }
         viewModel.loadCoin()
     }

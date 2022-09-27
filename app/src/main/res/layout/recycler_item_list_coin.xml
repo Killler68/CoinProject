@@ -6,7 +6,7 @@
     android:layout_height="56dp">
 
 
-    <TextView
+    <ImageView
         android:id="@+id/image_coin_item"
         android:layout_width="40dp"
         android:layout_height="40dp"

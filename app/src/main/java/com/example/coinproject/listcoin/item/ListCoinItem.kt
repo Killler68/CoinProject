@@ -1,7 +1,9 @@
 package com.example.coinproject.listcoin.item
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.example.coinproject.R
 import com.example.coinproject.databinding.RecyclerItemListCoinBinding
 import com.example.coinproject.listcoin.model.CoinData
@@ -12,22 +14,23 @@ class ListCoinItem(
     private val onClick: (String) -> Unit
 ) : AbstractBindingItem<RecyclerItemListCoinBinding>() {
 
-
+    @SuppressLint("SetTextI18n")
     override fun bindView(binding: RecyclerItemListCoinBinding, payloads: List<Any>) {
         super.bindView(binding, payloads)
 
-
         with(binding) {
-
             backgroundCoinItem.setOnClickListener {
-                onClick(coinData.coinName)
+                onClick(coinData.id)
             }
+            Glide
+                .with(binding.root)
+                .load(coinData.image)
+                .into(binding.imageCoinItem)
 
-            imageCoinItem.text = coinData.coinImage
-            textCoinItem.text = coinData.coinName
-            textCoinAbbreviatedItem.text = coinData.coinAbbreviated
-            textCoinCourseItem.text = coinData.coinCourse.toString()
-            textCoinCoursePercentItem.text = coinData.coinCoursePercent.toString()
+            textCoinItem.text = coinData.name
+            textCoinAbbreviatedItem.text = coinData.symbol
+            textCoinCourseItem.text = coinData.current_price.toString()
+            textCoinCoursePercentItem.text = "${coinData.market_cap_change_percentage_24h}%"
         }
     }
 

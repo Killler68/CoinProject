@@ -1,27 +1,32 @@
 package com.example.coinproject.listcoin.repository
 
+import com.example.coinproject.common.api.CoinApi
 import com.example.coinproject.listcoin.model.CoinData
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-class ListCoinRepositoryImpl() : ListCoinRepository {
+class ListCoinRepositoryImpl(private val coinApi: CoinApi) : ListCoinRepository {
 
-    override fun getCoin(): List<CoinData> = test
+    override fun getCoin(): Single<List<CoinData>> {
+        val response = coinApi.getCoinData()
+        return response.map {
+            it.map {
+                CoinData(
+                    it.id,
+                    it.symbol,
+                    it.name,
+                    it.image,
+                    it.current_price,
+                    it.market_cap_change_percentage_24h
+                )
+            }
+        }
+    }
 
+    override fun getLoadCoin(): Single<List<CoinData>> {
+        return getCoin()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }
-
-private val test = listOf(
-    CoinData("1", "Bitcoin", "BTC", 20000, 2),
-    CoinData("1", "Ethereum", "ETH", 3000, 3),
-    CoinData("1", "Binance", "BNB", 80, 0),
-    CoinData("1", "Bitcoin", "BTC", 20000, 2),
-    CoinData("1", "Bitcoin", "BTC", 20000, 2),
-    CoinData("1", "Bitcoin", "BTC", 20000, 2),
-    CoinData("1", "Bitcoin", "BTC", 20000, 2),
-    CoinData("1", "Bitcoin", "BTC", 20000, 2),
-    CoinData("1", "Bitcoin", "BTC", 20000, 2),
-    CoinData("1", "Bitcoin", "BTC", 20000, 2),
-    CoinData("1", "Bitcoin", "BTC", 20000, 2),
-    CoinData("1", "Bitcoin", "BTC", 20000, 2),
-    CoinData("1", "Bitcoin", "BTC", 20000, 2),
-    CoinData("1", "Bitcoin", "BTC", 20000, 2),
-    CoinData("1", "Bitcoin", "BTC", 20000, 2),
-    )

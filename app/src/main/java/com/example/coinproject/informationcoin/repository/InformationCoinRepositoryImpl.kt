@@ -1,17 +1,31 @@
 package com.example.coinproject.informationcoin.repository
 
+import com.example.coinproject.common.api.CoinApi
 import com.example.coinproject.informationcoin.model.InformationCoinData
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-class InformationCoinRepositoryImpl : InformationCoinRepository {
+class InformationCoinRepositoryImpl(private val coinApi: CoinApi) : InformationCoinRepository {
 
-    override fun getInformationCoin(): InformationCoinData = test
+    override fun getInformationCoin(): Single<InformationCoinData> {
+        val response = coinApi.getInformationCoinData()
+        return response.map {
+            InformationCoinData(
+                it.id,
+                it.name,
+                it.image.large,
+                it.description.en,
+                it.categories.toString()
+            )
+        }
+    }
 
+    override fun getLoadInformationCoin(): Single<InformationCoinData> {
+        return getInformationCoin()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }
 
-private val test =
-    InformationCoinData(
-        "Bitcoin",
-        "Bitcoin is a decentralized cryptocurrency originally described in a 2008 whitepaper by a person, or group of people, using the alias Satoshi Nakamoto.   It was launched soon after, in January 2009.",
-        "btc"
-    )
 
