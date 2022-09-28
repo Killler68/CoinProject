@@ -28,4 +28,13 @@ class ListCoinViewModel(
                 _internetError.postValue(it.message)
             })
     }
+
+    fun loadCoins() {
+        compositeDisposable += getCoins.invokes()
+            .subscribe({
+                _resultData.postValue(it)
+            }, {
+                _internetError.postValue(it.message)
+            })
+    }
 }

@@ -8,22 +8,7 @@ class InformationCoinUseCaseImpl(
     private val repository: InformationCoinRepository
 ) : InformationCoinUseCase {
 
-    private val coins = mutableMapOf<String, MutableList<InformationCoinData>>()
-
-    override fun invoke(id:String): Single<InformationCoinData> {
-        return repository.getLoadInformationCoin(id).map {
-
-            if (coins[it.id] != null)
-                coins[it.id]?.add(it)
-            else coins[it.id] = mutableListOf(it)
-
-            InformationCoinData(
-                it.id,
-                it.name,
-                it.image,
-                it.description,
-                it.categories
-            )
-        }
+    override fun invoke(id: String): Single<InformationCoinData> {
+        return repository.getInformationCoin(id)
     }
 }

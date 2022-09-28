@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.coinproject.common.context.toast
 import com.example.coinproject.common.fragment.getViewModelFactory
 import com.example.coinproject.common.fragment.navigateToFragment
 import com.example.coinproject.databinding.FragmentListCoinBinding
 import com.example.coinproject.informationcoin.FragmentInformationCoin
 import com.example.coinproject.listcoin.item.ListCoinItem
+import com.example.coinproject.listcoin.model.CoinData
 import com.example.coinproject.listcoin.viewmodel.ListCoinViewModel
 import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
@@ -42,22 +42,36 @@ class FragmentListCoin : Fragment() {
             adapter = fastAdapter
             itemAnimator = null
         }
-        viewModel.resultData.observe(viewLifecycleOwner) {
-            FastAdapterDiffUtil[listCoinItemAdapter] = it.map {
-                ListCoinItem(
-                    it,
-                    ::onClick
-                )
-            }
-        }
-        viewModel.internetError.observe(viewLifecycleOwner) {
-            context.toast(it)
-        }
+        setupObservables()
+        setupListeners()
         viewModel.loadCoin()
+    }
+
+    private fun setupObservables() {
+        viewModel.resultData.observe(viewLifecycleOwner, ::onDataLoaded)
+    }
+
+    private fun onDataLoaded(coinData: List<CoinData>) {
+        FastAdapterDiffUtil[listCoinItemAdapter] = coinData.map {
+            ListCoinItem(
+                it,
+                ::onClick
+            )
+        }
+    }
+
+    private fun setupListeners() {
+        binding.btnUsd.setOnClickListener {
+            viewModel.loadCoin()
+        }
+        binding.btnEur.setOnClickListener {
+            viewModel.loadCoins()
+        }
     }
 
     private fun onClick(coinId: String) {
         val fragmentPhoto = FragmentInformationCoin.create(coinId)
         navigateToFragment(fragmentPhoto)
     }
+
 }

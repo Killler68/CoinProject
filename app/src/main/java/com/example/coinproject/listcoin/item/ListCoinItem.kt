@@ -1,6 +1,7 @@
 package com.example.coinproject.listcoin.item
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
@@ -30,6 +31,11 @@ class ListCoinItem(
             textCoinItem.text = coinData.name
             textCoinAbbreviatedItem.text = coinData.symbol
             textCoinCourseItem.text = coinData.current_price.toString()
+            if (coinData.market_cap_change_percentage_24h > 0) {
+                binding.textCoinCoursePercentItem.setTextColor(Color.GREEN)
+            } else {
+                binding.textCoinCoursePercentItem.setTextColor(Color.RED)
+            }
             textCoinCoursePercentItem.text = "${coinData.market_cap_change_percentage_24h}%"
         }
     }

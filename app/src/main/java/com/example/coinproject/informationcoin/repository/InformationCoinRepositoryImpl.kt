@@ -19,10 +19,6 @@ class InformationCoinRepositoryImpl(private val coinApi: CoinApi) : InformationC
                 it.categories.toString()
             )
         }
-    }
-
-    override fun getLoadInformationCoin(id: String): Single<InformationCoinData> {
-        return getInformationCoin(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

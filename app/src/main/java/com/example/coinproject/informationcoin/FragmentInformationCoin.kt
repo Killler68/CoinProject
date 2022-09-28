@@ -8,12 +8,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.example.coinproject.common.context.toast
 import com.example.coinproject.common.fragment.getViewModelFactory
-import com.example.coinproject.common.fragment.navigateToFragment
 import com.example.coinproject.databinding.FragmentInformationCoinBinding
+import com.example.coinproject.informationcoin.model.InformationCoinData
 import com.example.coinproject.informationcoin.viewmodel.InformationCoinViewModel
-import com.example.coinproject.listcoin.FragmentListCoin
 
 const val coinIdKey = "coinIdKey"
 
@@ -38,26 +36,32 @@ class FragmentInformationCoin : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.resultInformationCoin.observe(viewLifecycleOwner) {
-            binding.apply {
-                textInformationCoin.text = it.name
-
-                Glide
-                    .with(view.rootView.context)
-                    .load(it.image)
-                    .into(binding.imageInformationCoin)
-
-                textDescriptionInformationCoin.text = it.description
-                textCategoriesInformationCoin.text = it.categories
-            }
-        }
-        viewModel.internetError.observe(viewLifecycleOwner) {
-            context.toast(it)
-        }
+        setupObservables()
+        setupListeners()
         viewModel.loadInformation(coinId)
+    }
 
+    private fun setupObservables() {
+        viewModel.resultInformationCoin.observe(viewLifecycleOwner, ::onDataLoaded)
+    }
+
+    private fun onDataLoaded(data: InformationCoinData) {
+        binding.apply {
+            textInformationCoin.text = data.name
+
+            Glide
+                .with(root)
+                .load(data.image)
+                .into(binding.imageInformationCoin)
+
+            textDescriptionInformationCoin.text = data.description
+            textCategoriesInformationCoin.text = data.categories
+        }
+    }
+
+    private fun setupListeners() {
         binding.imageBackInformationCoin.setOnClickListener {
-            navigateToFragment(FragmentListCoin())
+            requireActivity().onBackPressed()
         }
     }
 

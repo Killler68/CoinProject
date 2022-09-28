@@ -3,6 +3,7 @@ package com.example.coinproject.common.context
 import android.content.Context
 import android.widget.Toast
 import androidx.annotation.Nullable
+import androidx.fragment.app.Fragment
 import com.example.coinproject.common.application.AppComponent
 import com.example.coinproject.common.application.MainApp
 import org.jetbrains.annotations.NotNull
@@ -13,5 +14,5 @@ val Context.appComponent: AppComponent
         else -> this.applicationContext.appComponent
     }
 
-fun Context?.toast(message: CharSequence) =
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+fun Fragment.toast(message: CharSequence) =
+    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()

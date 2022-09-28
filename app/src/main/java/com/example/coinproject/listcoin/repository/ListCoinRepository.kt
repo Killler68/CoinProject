@@ -5,7 +5,8 @@ import io.reactivex.Single
 
 interface ListCoinRepository {
 
-    fun getCoin(): Single<List<CoinData>>
-    fun getLoadCoin(): Single<List<CoinData>>
+    fun getCoinsUsd(): Single<List<CoinData>>
+
+    fun getCoinsEur(): Single<List<CoinData>>
 
 }

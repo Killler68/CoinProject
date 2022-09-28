@@ -7,4 +7,6 @@ interface ListCoinUseCase {
 
     operator fun invoke(): Single<List<CoinData>>
 
+    fun invokes(): Single<List<CoinData>>
+
 }
