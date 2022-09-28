@@ -14,8 +14,8 @@ class ListCoinViewModel(
     private val getCoinsEur: ListCoinEurUseCase
 ) : ViewModel() {
 
-    private var _resultData: MutableLiveData<List<CoinData>> = MutableLiveData()
-    val resultData: LiveData<List<CoinData>> get() = _resultData
+    private var _resultListCoins: MutableLiveData<List<CoinData>> = MutableLiveData()
+    val resultListCoins: LiveData<List<CoinData>> get() = _resultListCoins
 
     private val _internetError: MutableLiveData<String> = MutableLiveData()
     val internetError: LiveData<String> get() = _internetError
@@ -25,7 +25,7 @@ class ListCoinViewModel(
     fun loadCoinsUsd() {
         compositeDisposable += getCoinsUsd()
             .subscribe({
-                _resultData.postValue(it)
+                _resultListCoins.postValue(it)
             }, {
                 _internetError.postValue(it.message)
             })
@@ -34,7 +34,7 @@ class ListCoinViewModel(
     fun loadCoinsEur() {
         compositeDisposable += getCoinsEur.invoke()
             .subscribe({
-                _resultData.postValue(it)
+                _resultListCoins.postValue(it)
             }, {
                 _internetError.postValue(it.message)
             })

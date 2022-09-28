@@ -9,7 +9,7 @@ import com.example.coinproject.informationcoin.usecase.InformationCoinUseCase
 import io.reactivex.disposables.CompositeDisposable
 
 class InformationCoinViewModel(
-    private val useCase: InformationCoinUseCase
+    private val getInformationCoin: InformationCoinUseCase
 ) : ViewModel() {
 
     private var _resultInformationCoin: MutableLiveData<InformationCoinData> = MutableLiveData()
@@ -21,7 +21,7 @@ class InformationCoinViewModel(
     private var compositeDisposable = CompositeDisposable()
 
     fun loadInformation(id: String) {
-        compositeDisposable += useCase(id)
+        compositeDisposable += getInformationCoin(id)
             .subscribe({
                 _resultInformationCoin.postValue(it)
             }, {

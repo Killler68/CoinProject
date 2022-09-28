@@ -5,10 +5,10 @@ import com.example.coinproject.informationcoin.repository.InformationCoinReposit
 import io.reactivex.Single
 
 class InformationCoinUseCaseImpl(
-    private val repository: InformationCoinRepository
+    private val repositoryInformationCoin: InformationCoinRepository
 ) : InformationCoinUseCase {
 
     override fun invoke(id: String): Single<InformationCoinData> {
-        return repository.getInformationCoin(id)
+        return repositoryInformationCoin.getInformationCoin(id)
     }
 }

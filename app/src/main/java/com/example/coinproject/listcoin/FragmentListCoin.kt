@@ -48,7 +48,7 @@ class FragmentListCoin : Fragment() {
     }
 
     private fun setupObservables() {
-        viewModel.resultData.observe(viewLifecycleOwner, ::onDataLoaded)
+        viewModel.resultListCoins.observe(viewLifecycleOwner, ::onDataLoaded)
     }
 
     private fun onDataLoaded(coinData: List<CoinData>) {
