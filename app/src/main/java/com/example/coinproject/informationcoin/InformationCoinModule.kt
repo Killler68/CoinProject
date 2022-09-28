@@ -18,19 +18,19 @@ import dagger.multibindings.IntoMap
 class InformationCoinModule {
 
     @Provides
-    fun provideARepository(api: CoinApi): InformationCoinRepository =
+    fun provideInformationCoinRepository(api: CoinApi): InformationCoinRepository =
         InformationCoinRepositoryImpl(api)
 
     @Provides
-    fun provideAUseCase(repository: InformationCoinRepository): InformationCoinUseCase =
+    fun provideInformationCoinUseCase(repository: InformationCoinRepository): InformationCoinUseCase =
         InformationCoinUseCaseImpl(repository)
 
     @Provides
     @IntoMap
     @ClassKey(InformationCoinViewModel::class)
     fun getViewModelInformationCoin(
-        useCase: InformationCoinUseCase
+        getInformationCoin: InformationCoinUseCase
     ): ViewModel {
-        return InformationCoinViewModel(useCase)
+        return InformationCoinViewModel(getInformationCoin)
     }
 }
