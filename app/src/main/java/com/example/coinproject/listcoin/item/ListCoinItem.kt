@@ -9,6 +9,9 @@ import com.example.coinproject.databinding.RecyclerItemListCoinBinding
 import com.example.coinproject.listcoin.model.CoinData
 import com.mikepenz.fastadapter.binding.AbstractBindingItem
 
+
+private const val NUMBER_COLOR_CHANGE = 0
+
 class ListCoinItem(
     private val coinData: CoinData,
     private val onClick: (String) -> Unit
@@ -32,7 +35,7 @@ class ListCoinItem(
             textCoinCourseItem.text = root.resources.getString(
                 R.string.usd, coinData.current_price.toString()
             )
-            if (coinData.market_cap_change_percentage_24h > 0) {
+            if (coinData.market_cap_change_percentage_24h > NUMBER_COLOR_CHANGE) {
                 binding.textCoinCoursePercentItem.setTextColor(Color.GREEN)
             } else {
                 binding.textCoinCoursePercentItem.setTextColor(Color.RED)
