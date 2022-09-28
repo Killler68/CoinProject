@@ -8,8 +8,8 @@ import io.reactivex.schedulers.Schedulers
 
 class InformationCoinRepositoryImpl(private val coinApi: CoinApi) : InformationCoinRepository {
 
-    override fun getInformationCoin(): Single<InformationCoinData> {
-        val response = coinApi.getInformationCoinData()
+    override fun getInformationCoin(id: String): Single<InformationCoinData> {
+        val response = coinApi.getInformationCoinData(id)
         return response.map {
             InformationCoinData(
                 it.id,
@@ -21,8 +21,8 @@ class InformationCoinRepositoryImpl(private val coinApi: CoinApi) : InformationC
         }
     }
 
-    override fun getLoadInformationCoin(): Single<InformationCoinData> {
-        return getInformationCoin()
+    override fun getLoadInformationCoin(id: String): Single<InformationCoinData> {
+        return getInformationCoin(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

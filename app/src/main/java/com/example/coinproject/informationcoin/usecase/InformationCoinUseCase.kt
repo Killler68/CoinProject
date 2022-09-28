@@ -5,6 +5,6 @@ import io.reactivex.Single
 
 interface InformationCoinUseCase {
 
-    operator fun invoke(): Single<InformationCoinData>
+    operator fun invoke(id:String): Single<InformationCoinData>
 
 }

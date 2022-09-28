@@ -6,19 +6,18 @@ import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 
 const val BASE_URL = "https://api.coingecko.com"
-const val API_KEY_LIST_COIN = "/api/v3/coins/markets?vs_currency=usd&per_page=20"
-const val API_KEY_INFORMATION_COIN = "/api/v3/coins/bitcoin"
 
 interface CoinApi {
 
-    @GET(API_KEY_LIST_COIN)
+    @GET("/api/v3/coins/markets?vs_currency=usd&per_page=20")
     fun getCoinData(): Single<List<CoinResponse>>
 
-    @GET(API_KEY_INFORMATION_COIN)
-    fun getInformationCoinData(): Single<CoinDetailResponse>
+    @GET("/api/v3/coins/{id}")
+    fun getInformationCoinData(@Path("id") id: String): Single<CoinDetailResponse>
 
     companion object {
         fun create(): CoinApi {

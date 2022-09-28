@@ -21,7 +21,7 @@ class InformationCoinViewModel(
     private var compositeDisposable = CompositeDisposable()
 
     fun loadInformation(id: String) {
-        compositeDisposable += useCase()
+        compositeDisposable += useCase(id)
             .subscribe({
                 _resultInformationCoin.postValue(it)
             }, {

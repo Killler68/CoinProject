@@ -5,6 +5,6 @@ import io.reactivex.Single
 
 interface InformationCoinRepository {
 
-    fun getInformationCoin(): Single<InformationCoinData>
-    fun getLoadInformationCoin(): Single<InformationCoinData>
+    fun getInformationCoin(id:String): Single<InformationCoinData>
+    fun getLoadInformationCoin(id: String): Single<InformationCoinData>
 }
