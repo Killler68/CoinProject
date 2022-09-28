@@ -6,7 +6,8 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class ListCoinRepositoryImpl(private val coinApi: CoinApi) : ListCoinRepository {
+class ListCoinRepositoryImpl(private val coinApi: CoinApi) :
+    ListCoinUsdRepository, ListCoinEurRepository {
 
     override fun getCoinsUsd(): Single<List<CoinData>> {
         val response = coinApi.getCoinsUsdData()
@@ -26,8 +27,7 @@ class ListCoinRepositoryImpl(private val coinApi: CoinApi) : ListCoinRepository 
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
-
-
+    
     override fun getCoinsEur(): Single<List<CoinData>> {
         val response = coinApi.getCoinsEurData()
         return response.map {
@@ -45,5 +45,4 @@ class ListCoinRepositoryImpl(private val coinApi: CoinApi) : ListCoinRepository 
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
-
 }

@@ -44,7 +44,7 @@ class FragmentListCoin : Fragment() {
         }
         setupObservables()
         setupListeners()
-        viewModel.loadCoin()
+        viewModel.loadCoinsUsd()
     }
 
     private fun setupObservables() {
@@ -62,10 +62,10 @@ class FragmentListCoin : Fragment() {
 
     private fun setupListeners() {
         binding.btnUsd.setOnClickListener {
-            viewModel.loadCoin()
+            viewModel.loadCoinsUsd()
         }
         binding.btnEur.setOnClickListener {
-            viewModel.loadCoins()
+            viewModel.loadCoinsEur()
         }
     }
 
