@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.coinproject.common.fragment.getViewModelFactory
@@ -49,6 +50,9 @@ class FragmentListCoin : Fragment() {
 
     private fun setupObservables() {
         viewModel.resultListCoins.observe(viewLifecycleOwner, ::onDataLoaded)
+        viewModel.internetError.observe(viewLifecycleOwner) {
+            visibleCoin()
+        }
     }
 
     private fun onDataLoaded(coinData: List<CoinData>) {
@@ -61,17 +65,26 @@ class FragmentListCoin : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.btnUsd.setOnClickListener {
-            viewModel.loadCoinsUsd()
+        with(binding) {
+            btnUsd.setOnClickListener {
+                viewModel.loadCoinsUsd()
+            }
+            btnEur.setOnClickListener {
+                viewModel.loadCoinsEur()
+            }
+            includedError.btnErrorRefresh.setOnClickListener {
+                viewModel.loadCoinsUsd()
+            }
         }
-        binding.btnEur.setOnClickListener {
-            viewModel.loadCoinsEur()
-        }
+    }
+
+    private fun visibleCoin() {
+        binding.cardView.isVisible = false
+        binding.includedError.backgroundError.isVisible = true
     }
 
     private fun onClick(coinId: String) {
         val fragmentPhoto = FragmentInformationCoin.create(coinId)
         navigateToFragment(fragmentPhoto)
     }
-
 }
