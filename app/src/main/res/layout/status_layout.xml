@@ -3,8 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/background_error"
     android:layout_width="match_parent"
-    android:visibility="gone"
     android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:constraint_referenced_ids="image_error,text_error,btn_error_refresh" />
 
     <ImageView
         android:id="@+id/image_error"
@@ -12,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="120dp"
         android:layout_marginTop="211dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,6 +32,7 @@
         android:gravity="center"
         android:text="Случилась какая то ошибка Попробуем снова?"
         android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_error" />
@@ -37,8 +44,20 @@
         android:layout_marginTop="32dp"
         android:backgroundTint="#FF9F00"
         android:text="Попробовать"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_error" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:backgroundTint="#FF9F00"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

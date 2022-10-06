@@ -13,6 +13,7 @@ import com.example.coinproject.databinding.FragmentListCoinBinding
 import com.example.coinproject.informationcoin.FragmentInformationCoin
 import com.example.coinproject.listcoin.item.ListCoinItem
 import com.example.coinproject.listcoin.model.CoinData
+import com.example.coinproject.listcoin.model.State
 import com.example.coinproject.listcoin.viewmodel.ListCoinViewModel
 import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
@@ -38,7 +39,6 @@ class FragmentListCoin : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         with(binding.recyclerCoin) {
             adapter = fastAdapter
             itemAnimator = null
@@ -50,9 +50,7 @@ class FragmentListCoin : Fragment() {
 
     private fun setupObservables() {
         viewModel.resultListCoins.observe(viewLifecycleOwner, ::onDataLoaded)
-        viewModel.internetError.observe(viewLifecycleOwner) {
-            visibleCoin()
-        }
+        viewModel.screenState.observe(viewLifecycleOwner, ::stateScreen)
     }
 
     private fun onDataLoaded(coinData: List<CoinData>) {
@@ -78,13 +76,38 @@ class FragmentListCoin : Fragment() {
         }
     }
 
-    private fun visibleCoin() {
+    private fun stateScreen(state: State) =
+        when (state) {
+            is State.Loading -> onScreenLoading()
+            is State.Loaded -> onScreenLoaded()
+            is State.Error -> onError()
+        }
+
+    private fun onScreenLoading() {
         binding.cardView.isVisible = false
-        binding.includedError.backgroundError.isVisible = true
+        binding.includedError.groupError.isVisible = false
+        binding.includedError.progressBar.isVisible = true
+    }
+
+    private fun onScreenLoaded() {
+        binding.cardView.isVisible = true
+        binding.includedError.groupError.isVisible = false
+        binding.includedError.progressBar.isVisible = false
+    }
+
+    private fun onError() {
+        binding.cardView.isVisible = false
+        binding.includedError.groupError.isVisible = true
+        binding.includedError.progressBar.isVisible = false
     }
 
     private fun onClick(coinId: String) {
         val fragmentPhoto = FragmentInformationCoin.create(coinId)
         navigateToFragment(fragmentPhoto)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

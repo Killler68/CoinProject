@@ -101,7 +101,7 @@
 
         <include
             android:id="@+id/included_error"
-            layout="@layout/error"
+            layout="@layout/status_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
