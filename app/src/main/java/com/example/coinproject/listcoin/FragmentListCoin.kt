@@ -97,8 +97,8 @@ class FragmentListCoin : Fragment() {
 
     private fun onError() {
         binding.cardView.isVisible = false
-        binding.includedError.groupError.isVisible = true
         binding.includedError.progressBar.isVisible = false
+        binding.includedError.groupError.isVisible = true
     }
 
     private fun onClick(coinId: String) {
