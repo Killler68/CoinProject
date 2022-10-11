@@ -1,5 +1,6 @@
 package com.example.coinproject.informationcoin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +40,7 @@ class FragmentInformationCoin : Fragment() {
         setupObservables()
         setupListeners()
         viewModel.loadInformation(coinId)
+        shareCoin()
     }
 
     private fun setupObservables() {
@@ -56,6 +58,16 @@ class FragmentInformationCoin : Fragment() {
 
             textDescriptionInformationCoin.text = data.description
             textCategoriesInformationCoin.text = data.categories
+        }
+    }
+
+    private fun shareCoin() {
+        binding.imageShare.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            val shareUrl = "https://api.coingecko.com/api/v3/coins/${coinId}"
+            intent.putExtra(Intent.EXTRA_TEXT, shareUrl)
+            startActivity(Intent.createChooser(intent, "shape"))
         }
     }
 
