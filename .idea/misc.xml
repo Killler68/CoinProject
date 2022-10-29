@@ -8,10 +8,13 @@
         <entry key="..\:/COD/CoinProject/app/src/main/res/layout/activity_main.xml" value="0.22327898550724637" />
         <entry key="..\:/COD/CoinProject/app/src/main/res/layout/error.xml" value="0.24895833333333334" />
         <entry key="..\:/COD/CoinProject/app/src/main/res/layout/error_coin.xml" value="0.25" />
+        <entry key="..\:/COD/CoinProject/app/src/main/res/layout/fragment_favorite_coin.xml" value="0.25" />
         <entry key="..\:/COD/CoinProject/app/src/main/res/layout/fragment_information_coin.xml" value="0.264" />
         <entry key="..\:/COD/CoinProject/app/src/main/res/layout/fragment_list_coin.xml" value="0.264" />
+        <entry key="..\:/COD/CoinProject/app/src/main/res/layout/fragment_selected_coins.xml" value="0.2441123188405797" />
         <entry key="..\:/COD/CoinProject/app/src/main/res/layout/progress_bar.xml" value="0.24895833333333334" />
         <entry key="..\:/COD/CoinProject/app/src/main/res/layout/recler.xml" value="0.1765625" />
+        <entry key="..\:/COD/CoinProject/app/src/main/res/layout/recycler_item_favorite_coin.xml" value="0.24895833333333334" />
         <entry key="..\:/COD/CoinProject/app/src/main/res/layout/recycler_item_list_coin.xml" value="0.264" />
         <entry key="..\:/COD/CoinProject/app/src/main/res/layout/status_layout.xml" value="0.536" />
       </map>

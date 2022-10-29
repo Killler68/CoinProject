@@ -23,8 +23,8 @@ class ListCoinViewModel(
 
     private var compositeDisposable = CompositeDisposable()
 
-    fun loadCoinsUsd() {
-        _screenState.postValue(State.Loading)
+    fun loadCoinsUsd(showProgress: Boolean = true) {
+        if (showProgress) _screenState.postValue(State.Loading)
         compositeDisposable += getCoinsUsd()
             .subscribe({
                 _resultListCoins.postValue(it)
@@ -34,7 +34,8 @@ class ListCoinViewModel(
             })
     }
 
-    fun loadCoinsEur() {
+    fun loadCoinsEur(showProgress: Boolean = true) {
+        if (showProgress) _screenState.postValue(State.Loading)
         compositeDisposable += getCoinsEur.invoke()
             .subscribe({
                 _resultListCoins.postValue(it)

@@ -29,7 +29,6 @@ class FragmentListCoin : Fragment() {
     private val listCoinItemAdapter = ItemAdapter<ListCoinItem>()
     private val fastAdapter = GenericFastAdapter.with(listOf(listCoinItemAdapter))
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,10 +64,10 @@ class FragmentListCoin : Fragment() {
     private fun setupListeners() {
         with(binding) {
             btnUsd.setOnClickListener {
-                viewModel.loadCoinsUsd()
+                viewModel.loadCoinsUsd(false)
             }
             btnEur.setOnClickListener {
-                viewModel.loadCoinsEur()
+                viewModel.loadCoinsEur(false)
             }
             includedError.btnErrorRefresh.setOnClickListener {
                 viewModel.loadCoinsUsd()
