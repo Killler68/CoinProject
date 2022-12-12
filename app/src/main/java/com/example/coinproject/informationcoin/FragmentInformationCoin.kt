@@ -82,12 +82,4 @@ class FragmentInformationCoin : Fragment() {
             viewModel.navigateToListCoin()
         }
     }
-
-//    companion object {
-//        fun create(id: String): FragmentInformationCoin {
-//            val fragment = FragmentInformationCoin()
-//            fragment.arguments = bundleOf(coinIdKey to id)
-//            return fragment
-//        }
-//    }
 }

@@ -105,11 +105,6 @@ class FragmentListCoin : Fragment() {
         binding.includedError.groupError.isVisible = true
     }
 
-//    private fun onClick(coinId: String) {
-//        val fragmentPhoto = FragmentInformationCoin.create(coinId)
-//        navigateToFragment(fragmentPhoto)
-//    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
