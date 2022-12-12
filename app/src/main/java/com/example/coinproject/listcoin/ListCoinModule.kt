@@ -6,10 +6,9 @@ import com.example.coinproject.common.network.NetworkModule
 import com.example.coinproject.listcoin.repository.ListCoinEurRepository
 import com.example.coinproject.listcoin.repository.ListCoinRepositoryImpl
 import com.example.coinproject.listcoin.repository.ListCoinUsdRepository
-import com.example.coinproject.listcoin.usecase.ListCoinEurUseCase
-import com.example.coinproject.listcoin.usecase.ListCoinEurUseCaseImpl
-import com.example.coinproject.listcoin.usecase.ListCoinUsdUseCase
-import com.example.coinproject.listcoin.usecase.ListCoinUsdUseCaseImpl
+import com.example.coinproject.listcoin.router.ListCoinRouterImpl
+import com.example.coinproject.listcoin.usecase.*
+import com.example.coinproject.listcoin.viewmodel.ListCoinInformationNavigatorUseCase
 import com.example.coinproject.listcoin.viewmodel.ListCoinViewModel
 import dagger.Module
 import dagger.Provides
@@ -18,6 +17,13 @@ import dagger.multibindings.IntoMap
 
 @Module(includes = [NetworkModule::class])
 class ListCoinModule {
+
+    @Provides
+    fun provideListCoinRouter(): ListCoinRouter = ListCoinRouterImpl()
+
+    @Provides
+    fun provideListCoinInformationNavigatorUseCase(router: ListCoinRouter):
+            ListCoinInformationNavigatorUseCase = ListCoinInformationNavigatorUseCaseImpl(router)
 
     @Provides
     fun provideRepositoryUsd(coinApi: CoinApi): ListCoinUsdRepository =
@@ -38,8 +44,15 @@ class ListCoinModule {
     @Provides
     @IntoMap
     @ClassKey(ListCoinViewModel::class)
-    fun getViewModelListCoin(getCoinsUsd: ListCoinUsdUseCase, getCoinsEur: ListCoinEurUseCase)
-            : ViewModel {
-        return ListCoinViewModel(getCoinsUsd, getCoinsEur)
+    fun getViewModelListCoin(
+        getCoinsUsd: ListCoinUsdUseCase,
+        getCoinsEur: ListCoinEurUseCase,
+        navigateToInformationUseCase: ListCoinInformationNavigatorUseCase
+    ): ViewModel {
+        return ListCoinViewModel(
+            getCoinsUsd,
+            getCoinsEur,
+            navigateToInformationUseCase
+        )
     }
 }

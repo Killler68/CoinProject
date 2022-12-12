@@ -23,10 +23,6 @@ class FragmentInformationCoin : Fragment() {
 
     private val viewModel: InformationCoinViewModel by viewModels { getViewModelFactory() }
 
-    private val coinId by lazy {
-        arguments?.getString(coinIdKey)!!
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,10 +32,14 @@ class FragmentInformationCoin : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val arguments = requireArguments().getString(coinIdKey)
+
 
         setupObservables()
         setupListeners()
-        viewModel.loadInformation(coinId)
+        if (arguments != null) {
+            viewModel.loadInformation(arguments)
+        }
         shareCoin()
     }
 
@@ -65,7 +65,7 @@ class FragmentInformationCoin : Fragment() {
         binding.imageShare.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "text/plain"
-            val shareUrl = "https://api.coingecko.com/api/v3/coins/${coinId}"
+            val shareUrl = "https://api.coingecko.com/api/v3/coins/${coinIdKey}"
             intent.putExtra(Intent.EXTRA_TEXT, shareUrl)
             startActivity(Intent.createChooser(intent, "shape"))
         }
