@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.coinproject.common.fragment.getViewModelFactory
+import com.example.coinproject.common.navigation.NavCommand
 import com.example.coinproject.databinding.FragmentInformationCoinBinding
 import com.example.coinproject.informationcoin.model.InformationCoinData
 import com.example.coinproject.informationcoin.viewmodel.InformationCoinViewModel
@@ -45,6 +46,7 @@ class FragmentInformationCoin : Fragment() {
 
     private fun setupObservables() {
         viewModel.resultInformationCoin.observe(viewLifecycleOwner, ::onDataLoaded)
+        viewModel.navCommand.observe(viewLifecycleOwner, ::onDataLoadedNavigate)
     }
 
     private fun onDataLoaded(data: InformationCoinData) {
@@ -61,6 +63,10 @@ class FragmentInformationCoin : Fragment() {
         }
     }
 
+    private fun onDataLoadedNavigate(navCommand: NavCommand) {
+        findNavController().navigate(navCommand.action, navCommand.command)
+    }
+
     private fun shareCoin() {
         binding.imageShare.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
@@ -73,15 +79,15 @@ class FragmentInformationCoin : Fragment() {
 
     private fun setupListeners() {
         binding.imageBackInformationCoin.setOnClickListener {
-            requireActivity().onBackPressed()
+            viewModel.navigateToListCoin()
         }
     }
 
-    companion object {
-        fun create(id: String): FragmentInformationCoin {
-            val fragment = FragmentInformationCoin()
-            fragment.arguments = bundleOf(coinIdKey to id)
-            return fragment
-        }
-    }
+//    companion object {
+//        fun create(id: String): FragmentInformationCoin {
+//            val fragment = FragmentInformationCoin()
+//            fragment.arguments = bundleOf(coinIdKey to id)
+//            return fragment
+//        }
+//    }
 }
