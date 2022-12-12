@@ -39,11 +39,12 @@
 
     <Button
         android:id="@+id/btn_error_refresh"
-        android:layout_width="175dp"
-        android:layout_height="36dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:backgroundTint="#FF9F00"
         android:text="Попробовать"
+        android:layout_marginHorizontal="120dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
