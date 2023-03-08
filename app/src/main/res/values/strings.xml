@@ -6,5 +6,7 @@
     <string name="percent">+++%s++++</string>
     <string name="per">%s-</string>
     <string name="usd">$ %s</string>
-    <string name="list_coin">Список криптовалют</string>
+    <string name="list_coin"><b>Список криптовалют</b></string>
+    <string name="category"><b>Категории</b></string>
+    <string name="description"><b>Описание</b></string>
 </resources>
