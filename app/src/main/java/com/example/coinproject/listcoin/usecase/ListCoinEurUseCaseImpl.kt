@@ -7,7 +7,6 @@ import io.reactivex.Single
 class ListCoinEurUseCaseImpl(private val repositoryEur: ListCoinEurRepository) :
     ListCoinEurUseCase {
 
-    override fun invoke(): Single<List<CoinData>> {
-        return repositoryEur.getCoinsEur()
-    }
+    override suspend fun invoke(): List<CoinData> = repositoryEur.getCoinsEur()
+
 }

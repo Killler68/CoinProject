@@ -14,10 +14,10 @@ const val BASE_URL = "https://api.coingecko.com"
 interface CoinApi {
 
     @GET("/api/v3/coins/markets?vs_currency=usd&per_page=25")
-    fun getCoinsUsdData(): Single<List<CoinResponse>>
+    suspend fun getCoinsUsdData(): List<CoinResponse>
 
     @GET("/api/v3/coins/markets?vs_currency=eur&per_page=25")
-    fun getCoinsEurData(): Single<List<CoinResponse>>
+    suspend fun getCoinsEurData(): List<CoinResponse>
 
     @GET("/api/v3/coins/{id}")
     fun getInformationCoinData(@Path("id") id: String?): Single<CoinDetailResponse>

@@ -5,6 +5,6 @@ import io.reactivex.Single
 
 interface ListCoinUsdRepository {
 
-    fun getCoinsUsd(): Single<List<CoinData>>
+   suspend fun getCoinsUsd(): List<CoinData>
 
 }

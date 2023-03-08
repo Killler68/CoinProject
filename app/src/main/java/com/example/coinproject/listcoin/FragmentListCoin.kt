@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.coinproject.common.flow.launchWhenViewCreated
 import com.example.coinproject.common.fragment.getViewModelFactory
 import com.example.coinproject.databinding.FragmentListCoinBinding
 import com.example.coinproject.listcoin.item.ListCoinItem
@@ -46,8 +47,10 @@ class FragmentListCoin : Fragment() {
     }
 
     private fun setupObservables() {
-        viewModel.resultListCoins.observe(viewLifecycleOwner, ::onDataLoaded)
-        viewModel.screenState.observe(viewLifecycleOwner, ::stateScreen)
+        launchWhenViewCreated {
+            viewModel.listCoins.observe(::onDataLoaded)
+            viewModel.screenState.observe(viewLifecycleOwner, ::stateScreen)
+        }
     }
 
     private fun onDataLoaded(coinData: List<CoinData>) {
