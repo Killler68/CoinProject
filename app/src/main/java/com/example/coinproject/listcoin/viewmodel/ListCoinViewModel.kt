@@ -3,7 +3,6 @@ package com.example.coinproject.listcoin.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.coinproject.common.navigation.NavCommand
 import com.example.coinproject.common.rx.plusAssign
 import com.example.coinproject.listcoin.model.CoinData
 import com.example.coinproject.listcoin.model.State

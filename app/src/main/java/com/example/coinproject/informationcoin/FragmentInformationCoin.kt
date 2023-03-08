@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.coinproject.common.fragment.getViewModelFactory
-import com.example.coinproject.common.navigation.NavCommand
 import com.example.coinproject.databinding.FragmentInformationCoinBinding
 import com.example.coinproject.informationcoin.model.InformationCoinData
 import com.example.coinproject.informationcoin.viewmodel.InformationCoinViewModel
@@ -63,8 +62,7 @@ class FragmentInformationCoin : Fragment() {
         }
     }
 
-    private fun onDataLoadedNavigate(navCommand: NavCommand) {
-        findNavController().navigate(navCommand.action, navCommand.command)
+    private fun onDataLoadedNavigate() {
     }
 
     private fun shareCoin() {
