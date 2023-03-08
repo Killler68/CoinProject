@@ -1,33 +1,31 @@
 package com.example.coinproject.informationcoin.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.coinproject.common.rx.plusAssign
+import androidx.lifecycle.viewModelScope
+import com.example.coinproject.common.flow.createSharedFlow
 import com.example.coinproject.informationcoin.model.InformationCoinData
 import com.example.coinproject.informationcoin.usecase.InformationCoinUseCase
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
 class InformationCoinViewModel(
     private val getInformationCoin: InformationCoinUseCase,
     private val navigateToListCoin: BackNavigatorUseCase
 ) : ViewModel() {
 
-    private var _resultInformationCoin: MutableLiveData<InformationCoinData> = MutableLiveData()
-    val resultInformationCoin: LiveData<InformationCoinData> get() = _resultInformationCoin
-
-    private val _internetError: MutableLiveData<String> = MutableLiveData()
-    val internetError: LiveData<String> get() = _internetError
-
-    private var compositeDisposable = CompositeDisposable()
+    private var _informationCoin: MutableSharedFlow<InformationCoinData> = createSharedFlow()
+    val informationCoin: SharedFlow<InformationCoinData> get() = _informationCoin.asSharedFlow()
 
     fun loadInformation(id: String?) {
-        compositeDisposable += getInformationCoin(id)
-            .subscribe({
-                _resultInformationCoin.postValue(it)
-            }, {
-                _internetError.postValue(it.message)
-            })
+        viewModelScope.launch {
+            try {
+                _informationCoin.tryEmit(getInformationCoin(id))
+            } catch (e: Exception) {
+                e.message
+            }
+        }
     }
 
     fun toBack() = navigateToListCoin()

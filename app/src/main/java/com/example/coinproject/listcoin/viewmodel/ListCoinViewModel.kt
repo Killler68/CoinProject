@@ -3,12 +3,15 @@ package com.example.coinproject.listcoin.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.coinproject.common.rx.plusAssign
+import androidx.lifecycle.viewModelScope
 import com.example.coinproject.listcoin.model.CoinData
 import com.example.coinproject.listcoin.model.State
 import com.example.coinproject.listcoin.usecase.ListCoinEurUseCase
 import com.example.coinproject.listcoin.usecase.ListCoinUsdUseCase
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class ListCoinViewModel(
     private val getCoinsUsd: ListCoinUsdUseCase,
@@ -16,34 +19,34 @@ class ListCoinViewModel(
     private val navigateToInformationCoin: InformationCoinNavigatorUseCase
 ) : ViewModel() {
 
-    private var _resultListCoins: MutableLiveData<List<CoinData>> = MutableLiveData()
-    val resultListCoins: LiveData<List<CoinData>> get() = _resultListCoins
+    private var _listCoins: MutableStateFlow<List<CoinData>> = MutableStateFlow(emptyList())
+    val listCoins: StateFlow<List<CoinData>> get() = _listCoins.asStateFlow()
 
     private var _screenState: MutableLiveData<State> = MutableLiveData()
     val screenState: LiveData<State> get() = _screenState
 
-    private var compositeDisposable = CompositeDisposable()
-
     fun loadCoinsUsd(showProgress: Boolean = true) {
-        if (showProgress) _screenState.postValue(State.Loading)
-        compositeDisposable += getCoinsUsd()
-            .subscribe({
-                _resultListCoins.postValue(it)
+        viewModelScope.launch {
+            if (showProgress) _screenState.postValue(State.Loading)
+            try {
+                _listCoins.tryEmit(getCoinsUsd())
                 _screenState.postValue(State.Loaded)
-            }, {
+            } catch (e: Exception) {
                 _screenState.postValue(State.Error)
-            })
+            }
+        }
     }
 
     fun loadCoinsEur(showProgress: Boolean = true) {
-        if (showProgress) _screenState.postValue(State.Loading)
-        compositeDisposable += getCoinsEur.invoke()
-            .subscribe({
-                _resultListCoins.postValue(it)
+        viewModelScope.launch {
+            if (showProgress) _screenState.postValue(State.Loading)
+            try {
+                _listCoins.tryEmit(getCoinsEur())
                 _screenState.postValue(State.Loaded)
-            }, {
+            } catch (e: Exception) {
                 _screenState.postValue(State.Error)
-            })
+            }
+        }
     }
 
     fun toInformationCoin(id: String) = navigateToInformationCoin(id)

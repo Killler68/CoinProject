@@ -2,18 +2,16 @@ package com.example.coinproject.listcoin.repository
 
 import com.example.coinproject.common.api.CoinApi
 import com.example.coinproject.listcoin.model.CoinData
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class ListCoinRepositoryImpl(private val coinApi: CoinApi) :
     ListCoinUsdRepository, ListCoinEurRepository {
 
-    override fun getCoinsUsd(): Single<List<CoinData>> {
-        try {
+    override suspend fun getCoinsUsd(): List<CoinData> =
+        withContext(Dispatchers.IO) {
             val response = coinApi.getCoinsUsdData()
-            return response.map {
-                it.map {
+                .map {
                     CoinData(
                         it.id,
                         it.symbol,
@@ -23,29 +21,22 @@ class ListCoinRepositoryImpl(private val coinApi: CoinApi) :
                         it.market_cap_change_percentage_24h
                     )
                 }
-            }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-        } catch (e: Exception) {
-            throw Exception()
+            response
         }
-    }
 
-    override fun getCoinsEur(): Single<List<CoinData>> {
-        val response = coinApi.getCoinsEurData()
-        return response.map {
-            it.map {
-                CoinData(
-                    it.id,
-                    it.symbol,
-                    it.name,
-                    it.image,
-                    it.current_price,
-                    it.market_cap_change_percentage_24h
-                )
-            }
+    override suspend fun getCoinsEur(): List<CoinData> =
+        withContext(Dispatchers.IO) {
+            val response = coinApi.getCoinsEurData()
+                .map {
+                    CoinData(
+                        it.id,
+                        it.symbol,
+                        it.name,
+                        it.image,
+                        it.current_price,
+                        it.market_cap_change_percentage_24h
+                    )
+                }
+            response
         }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-    }
 }

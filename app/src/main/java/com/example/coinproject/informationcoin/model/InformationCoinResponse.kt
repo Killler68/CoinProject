@@ -1,11 +1,11 @@
 package com.example.coinproject.informationcoin.model
 
-data class CoinDetailResponse(
+data class InformationCoinResponse(
     val id: String,
     val name: String,
     val image: ImageResponse,
-    val categories: List<String>,
-    val description: CoinDescriptionResponse
+    val description: CoinDescriptionResponse,
+    val categories: List<String>
 )
 
 data class CoinDescriptionResponse(
