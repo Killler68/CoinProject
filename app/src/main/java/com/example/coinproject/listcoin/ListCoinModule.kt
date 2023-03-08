@@ -7,7 +7,9 @@ import com.example.coinproject.listcoin.repository.ListCoinEurRepository
 import com.example.coinproject.listcoin.repository.ListCoinRepositoryImpl
 import com.example.coinproject.listcoin.repository.ListCoinUsdRepository
 import com.example.coinproject.listcoin.usecase.*
+import com.example.coinproject.listcoin.viewmodel.InformationCoinNavigatorUseCase
 import com.example.coinproject.listcoin.viewmodel.ListCoinViewModel
+import com.github.terrakok.cicerone.Router
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.ClassKey
@@ -34,15 +36,21 @@ class ListCoinModule {
         ListCoinEurUseCaseImpl(repositoryEur)
 
     @Provides
+    fun provideInformationCoinNavigatorUseCase(router: Router): InformationCoinNavigatorUseCase =
+        InformationCoinNavigatorUseCaseImpl(router)
+
+    @Provides
     @IntoMap
     @ClassKey(ListCoinViewModel::class)
     fun getViewModelListCoin(
         getCoinsUsd: ListCoinUsdUseCase,
         getCoinsEur: ListCoinEurUseCase,
+        navigateToInformationCoinUseCase: InformationCoinNavigatorUseCase
     ): ViewModel {
         return ListCoinViewModel(
             getCoinsUsd,
             getCoinsEur,
+            navigateToInformationCoinUseCase
         )
     }
 }

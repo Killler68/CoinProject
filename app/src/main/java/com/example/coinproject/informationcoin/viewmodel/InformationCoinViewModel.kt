@@ -18,12 +18,9 @@ class InformationCoinViewModel(
     private val _internetError: MutableLiveData<String> = MutableLiveData()
     val internetError: LiveData<String> get() = _internetError
 
-    private val _navCommand: MutableLiveData<NavCommand> = MutableLiveData()
-    val navCommand: LiveData<NavCommand> get() = _navCommand
-
     private var compositeDisposable = CompositeDisposable()
 
-    fun loadInformation(id: String) {
+    fun loadInformation(id: String?) {
         compositeDisposable += getInformationCoin(id)
             .subscribe({
                 _resultInformationCoin.postValue(it)

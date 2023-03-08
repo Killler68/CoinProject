@@ -7,7 +7,7 @@ import com.example.coinproject.common.context.appComponent
 fun Fragment.navigateToFragment(fragment: Fragment) {
     this.parentFragmentManager
         .beginTransaction()
-        .replace(R.id.container, fragment, fragment.javaClass.simpleName)
+        .replace(R.id.container_main, fragment, fragment.javaClass.simpleName)
         .addToBackStack(fragment.javaClass.simpleName)
         .commit()
 }

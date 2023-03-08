@@ -8,7 +8,7 @@ class InformationCoinUseCaseImpl(
     private val repositoryInformationCoin: InformationCoinRepository
 ) : InformationCoinUseCase {
 
-    override fun invoke(id: String): Single<InformationCoinData> {
+    override fun invoke(id: String?): Single<InformationCoinData> {
         return repositoryInformationCoin.getInformationCoin(id)
     }
 }
