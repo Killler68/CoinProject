@@ -61,7 +61,7 @@ class FragmentListCoin : Fragment() {
         FastAdapterDiffUtil[listCoinItemAdapter] = coinData.map {
             ListCoinItem(
                 it,
-                viewModel::navigateToInformation
+//                viewModel::navigateToInformation
             )
         }
     }

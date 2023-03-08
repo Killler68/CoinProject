@@ -14,7 +14,6 @@ import io.reactivex.disposables.CompositeDisposable
 class ListCoinViewModel(
     private val getCoinsUsd: ListCoinUsdUseCase,
     private val getCoinsEur: ListCoinEurUseCase,
-    private val navigatorToInformation: ListCoinInformationNavigatorUseCase
 ) : ViewModel() {
 
     private var _resultListCoins: MutableLiveData<List<CoinData>> = MutableLiveData()
@@ -48,9 +47,5 @@ class ListCoinViewModel(
             }, {
                 _screenState.postValue(State.Error)
             })
-    }
-
-    fun navigateToInformation(id: String) {
-        _navCommand.postValue(navigatorToInformation(id))
     }
 }

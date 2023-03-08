@@ -79,7 +79,7 @@ class FragmentInformationCoin : Fragment() {
 
     private fun setupListeners() {
         binding.imageBackInformationCoin.setOnClickListener {
-            viewModel.navigateToListCoin()
+
         }
     }
 }
