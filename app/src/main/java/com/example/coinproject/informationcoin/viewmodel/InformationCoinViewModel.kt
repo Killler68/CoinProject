@@ -10,6 +10,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 class InformationCoinViewModel(
     private val getInformationCoin: InformationCoinUseCase,
+    private val navigateToListCoin: BackNavigatorUseCase
 ) : ViewModel() {
 
     private var _resultInformationCoin: MutableLiveData<InformationCoinData> = MutableLiveData()
@@ -29,4 +30,5 @@ class InformationCoinViewModel(
             })
     }
 
+    fun toBack() = navigateToListCoin()
 }
