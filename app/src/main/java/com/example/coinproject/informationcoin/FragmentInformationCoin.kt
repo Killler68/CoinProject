@@ -1,6 +1,7 @@
 package com.example.coinproject.informationcoin
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,6 +51,7 @@ class FragmentInformationCoin : Fragment() {
     private fun onDataLoaded(data: InformationCoinData) {
         binding.apply {
             textInformationCoin.text = data.name
+            binding.textInformationCoin.setTypeface(null, Typeface.BOLD)
 
             Glide
                 .with(root)
