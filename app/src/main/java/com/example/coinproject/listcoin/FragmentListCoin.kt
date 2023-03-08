@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.coinproject.common.fragment.getViewModelFactory
-import com.example.coinproject.common.navigation.NavCommand
 import com.example.coinproject.databinding.FragmentListCoinBinding
 import com.example.coinproject.listcoin.item.ListCoinItem
 import com.example.coinproject.listcoin.model.CoinData
@@ -50,18 +48,13 @@ class FragmentListCoin : Fragment() {
     private fun setupObservables() {
         viewModel.resultListCoins.observe(viewLifecycleOwner, ::onDataLoaded)
         viewModel.screenState.observe(viewLifecycleOwner, ::stateScreen)
-        viewModel.navCommand.observe(viewLifecycleOwner, ::onDataLoadedNavigate)
-    }
-
-    private fun onDataLoadedNavigate(navCommand: NavCommand) {
-        findNavController().navigate(navCommand.action, navCommand.command)
     }
 
     private fun onDataLoaded(coinData: List<CoinData>) {
         FastAdapterDiffUtil[listCoinItemAdapter] = coinData.map {
             ListCoinItem(
                 it,
-                viewModel::navigateToInformation
+                viewModel::toInformationCoin
             )
         }
     }

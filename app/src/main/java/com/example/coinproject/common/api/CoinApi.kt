@@ -20,7 +20,7 @@ interface CoinApi {
     fun getCoinsEurData(): Single<List<CoinResponse>>
 
     @GET("/api/v3/coins/{id}")
-    fun getInformationCoinData(@Path("id") id: String): Single<CoinDetailResponse>
+    fun getInformationCoinData(@Path("id") id: String?): Single<CoinDetailResponse>
 
     companion object {
         fun create(): CoinApi {

@@ -3,7 +3,6 @@ package com.example.coinproject.listcoin.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.coinproject.common.navigation.NavCommand
 import com.example.coinproject.common.rx.plusAssign
 import com.example.coinproject.listcoin.model.CoinData
 import com.example.coinproject.listcoin.model.State
@@ -14,7 +13,7 @@ import io.reactivex.disposables.CompositeDisposable
 class ListCoinViewModel(
     private val getCoinsUsd: ListCoinUsdUseCase,
     private val getCoinsEur: ListCoinEurUseCase,
-    private val navigatorToInformation: ListCoinInformationNavigatorUseCase
+    private val navigateToInformationCoin: InformationCoinNavigatorUseCase
 ) : ViewModel() {
 
     private var _resultListCoins: MutableLiveData<List<CoinData>> = MutableLiveData()
@@ -22,9 +21,6 @@ class ListCoinViewModel(
 
     private var _screenState: MutableLiveData<State> = MutableLiveData()
     val screenState: LiveData<State> get() = _screenState
-
-    private val _navCommand: MutableLiveData<NavCommand> = MutableLiveData()
-    val navCommand: LiveData<NavCommand> get() = _navCommand
 
     private var compositeDisposable = CompositeDisposable()
 
@@ -50,7 +46,5 @@ class ListCoinViewModel(
             })
     }
 
-    fun navigateToInformation(id: String) {
-        _navCommand.postValue(navigatorToInformation(id))
-    }
+    fun toInformationCoin(id: String) = navigateToInformationCoin(id)
 }

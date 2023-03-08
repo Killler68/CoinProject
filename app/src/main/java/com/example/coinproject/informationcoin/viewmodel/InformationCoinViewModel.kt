@@ -3,7 +3,6 @@ package com.example.coinproject.informationcoin.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.coinproject.common.navigation.NavCommand
 import com.example.coinproject.common.rx.plusAssign
 import com.example.coinproject.informationcoin.model.InformationCoinData
 import com.example.coinproject.informationcoin.usecase.InformationCoinUseCase
@@ -11,7 +10,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 class InformationCoinViewModel(
     private val getInformationCoin: InformationCoinUseCase,
-    private val navigatorToListCoin: InformationCoinListNavigatorUseCase
+    private val navigateToListCoin: BackNavigatorUseCase
 ) : ViewModel() {
 
     private var _resultInformationCoin: MutableLiveData<InformationCoinData> = MutableLiveData()
@@ -20,12 +19,9 @@ class InformationCoinViewModel(
     private val _internetError: MutableLiveData<String> = MutableLiveData()
     val internetError: LiveData<String> get() = _internetError
 
-    private val _navCommand: MutableLiveData<NavCommand> = MutableLiveData()
-    val navCommand: LiveData<NavCommand> get() = _navCommand
-
     private var compositeDisposable = CompositeDisposable()
 
-    fun loadInformation(id: String) {
+    fun loadInformation(id: String?) {
         compositeDisposable += getInformationCoin(id)
             .subscribe({
                 _resultInformationCoin.postValue(it)
@@ -34,7 +30,5 @@ class InformationCoinViewModel(
             })
     }
 
-    fun navigateToListCoin() {
-        _navCommand.postValue(navigatorToListCoin())
-    }
+    fun toBack() = navigateToListCoin()
 }

@@ -5,17 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.coinproject.common.fragment.getViewModelFactory
-import com.example.coinproject.common.navigation.NavCommand
+import com.example.coinproject.common.string.COIN_ID_KEY
 import com.example.coinproject.databinding.FragmentInformationCoinBinding
 import com.example.coinproject.informationcoin.model.InformationCoinData
 import com.example.coinproject.informationcoin.viewmodel.InformationCoinViewModel
 
-const val coinIdKey = "coinIdKey"
 
 class FragmentInformationCoin : Fragment() {
 
@@ -23,6 +22,10 @@ class FragmentInformationCoin : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: InformationCoinViewModel by viewModels { getViewModelFactory() }
+
+    private val coinId by lazy {
+        requireArguments().getString(COIN_ID_KEY)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,20 +36,15 @@ class FragmentInformationCoin : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val arguments = requireArguments().getString(coinIdKey)
-
 
         setupObservables()
         setupListeners()
-        if (arguments != null) {
-            viewModel.loadInformation(arguments)
-        }
+        viewModel.loadInformation(coinId)
         shareCoin()
     }
 
     private fun setupObservables() {
         viewModel.resultInformationCoin.observe(viewLifecycleOwner, ::onDataLoaded)
-        viewModel.navCommand.observe(viewLifecycleOwner, ::onDataLoadedNavigate)
     }
 
     private fun onDataLoaded(data: InformationCoinData) {
@@ -63,15 +61,11 @@ class FragmentInformationCoin : Fragment() {
         }
     }
 
-    private fun onDataLoadedNavigate(navCommand: NavCommand) {
-        findNavController().navigate(navCommand.action, navCommand.command)
-    }
-
     private fun shareCoin() {
         binding.imageShare.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "text/plain"
-            val shareUrl = "https://api.coingecko.com/api/v3/coins/${coinIdKey}"
+            val shareUrl = "https://api.coingecko.com/api/v3/coins/${COIN_ID_KEY}"
             intent.putExtra(Intent.EXTRA_TEXT, shareUrl)
             startActivity(Intent.createChooser(intent, "shape"))
         }
@@ -79,7 +73,15 @@ class FragmentInformationCoin : Fragment() {
 
     private fun setupListeners() {
         binding.imageBackInformationCoin.setOnClickListener {
-            viewModel.navigateToListCoin()
+            viewModel.toBack()
+        }
+    }
+
+    companion object {
+        fun newInstance(id: String): FragmentInformationCoin {
+            val fragment = FragmentInformationCoin()
+            fragment.arguments = bundleOf(COIN_ID_KEY to id)
+            return fragment
         }
     }
 }

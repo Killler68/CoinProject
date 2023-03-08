@@ -6,10 +6,10 @@ import com.example.coinproject.common.network.NetworkModule
 import com.example.coinproject.listcoin.repository.ListCoinEurRepository
 import com.example.coinproject.listcoin.repository.ListCoinRepositoryImpl
 import com.example.coinproject.listcoin.repository.ListCoinUsdRepository
-import com.example.coinproject.listcoin.router.ListCoinRouterImpl
 import com.example.coinproject.listcoin.usecase.*
-import com.example.coinproject.listcoin.viewmodel.ListCoinInformationNavigatorUseCase
+import com.example.coinproject.listcoin.viewmodel.InformationCoinNavigatorUseCase
 import com.example.coinproject.listcoin.viewmodel.ListCoinViewModel
+import com.github.terrakok.cicerone.Router
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.ClassKey
@@ -18,12 +18,6 @@ import dagger.multibindings.IntoMap
 @Module(includes = [NetworkModule::class])
 class ListCoinModule {
 
-    @Provides
-    fun provideListCoinRouter(): ListCoinRouter = ListCoinRouterImpl()
-
-    @Provides
-    fun provideListCoinInformationNavigatorUseCase(router: ListCoinRouter):
-            ListCoinInformationNavigatorUseCase = ListCoinInformationNavigatorUseCaseImpl(router)
 
     @Provides
     fun provideRepositoryUsd(coinApi: CoinApi): ListCoinUsdRepository =
@@ -42,17 +36,21 @@ class ListCoinModule {
         ListCoinEurUseCaseImpl(repositoryEur)
 
     @Provides
+    fun provideInformationCoinNavigatorUseCase(router: Router): InformationCoinNavigatorUseCase =
+        InformationCoinNavigatorUseCaseImpl(router)
+
+    @Provides
     @IntoMap
     @ClassKey(ListCoinViewModel::class)
     fun getViewModelListCoin(
         getCoinsUsd: ListCoinUsdUseCase,
         getCoinsEur: ListCoinEurUseCase,
-        navigateToInformationUseCase: ListCoinInformationNavigatorUseCase
+        navigateToInformationCoinUseCase: InformationCoinNavigatorUseCase
     ): ViewModel {
         return ListCoinViewModel(
             getCoinsUsd,
             getCoinsEur,
-            navigateToInformationUseCase
+            navigateToInformationCoinUseCase
         )
     }
 }
