@@ -10,6 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.example.coinproject.common.flow.launchWhenViewCreated
 import com.example.coinproject.common.fragment.getViewModelFactory
 import com.example.coinproject.common.string.COIN_ID_KEY
 import com.example.coinproject.databinding.FragmentInformationCoinBinding
@@ -45,7 +46,9 @@ class FragmentInformationCoin : Fragment() {
     }
 
     private fun setupObservables() {
-        viewModel.resultInformationCoin.observe(viewLifecycleOwner, ::onDataLoaded)
+        launchWhenViewCreated {
+            viewModel.informationCoin.observe(::onDataLoaded)
+        }
     }
 
     private fun onDataLoaded(data: InformationCoinData) {

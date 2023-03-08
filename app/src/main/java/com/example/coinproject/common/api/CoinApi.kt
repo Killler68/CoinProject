@@ -1,8 +1,7 @@
 package com.example.coinproject.common.api
 
-import com.example.coinproject.informationcoin.model.CoinDetailResponse
+import com.example.coinproject.informationcoin.model.InformationCoinResponse
 import com.example.coinproject.listcoin.model.CoinResponse
-import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -20,7 +19,7 @@ interface CoinApi {
     suspend fun getCoinsEurData(): List<CoinResponse>
 
     @GET("/api/v3/coins/{id}")
-    fun getInformationCoinData(@Path("id") id: String?): Single<CoinDetailResponse>
+    suspend fun getInformationCoinData(@Path("id") id: String?): InformationCoinResponse
 
     companion object {
         fun create(): CoinApi {
