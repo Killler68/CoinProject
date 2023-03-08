@@ -81,21 +81,25 @@ class FragmentListCoin : Fragment() {
         }
 
     private fun onScreenLoading() {
-        binding.cardView.isVisible = false
+        binding.group.isVisible = false
         binding.includedError.groupError.isVisible = false
         binding.includedError.progressBar.isVisible = true
+        binding.includedError.root.isVisible = true
     }
 
     private fun onScreenLoaded() {
-        binding.cardView.isVisible = true
+        binding.group.isVisible = true
         binding.includedError.groupError.isVisible = false
         binding.includedError.progressBar.isVisible = false
+        binding.includedError.root.isVisible = false
+
     }
 
     private fun onError() {
-        binding.cardView.isVisible = false
+        binding.group.isVisible = false
         binding.includedError.progressBar.isVisible = false
         binding.includedError.groupError.isVisible = true
+        binding.includedError.root.isVisible = true
     }
 
     override fun onDestroyView() {
