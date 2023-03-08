@@ -1,5 +1,6 @@
 package com.example.coinproject.common.module
 
+import com.example.coinproject.common.activity.ActivityModule
 import com.example.coinproject.common.application.ApplicationModule
 import com.example.coinproject.informationcoin.InformationCoinModule
 import com.example.coinproject.listcoin.ListCoinModule
@@ -10,7 +11,8 @@ import dagger.Module
     includes = [
         ListCoinModule::class,
         InformationCoinModule::class,
-        ApplicationModule::class
+        ApplicationModule::class,
+        ActivityModule::class
     ]
 )
 class FeaturesModule
