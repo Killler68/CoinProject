@@ -9,4 +9,6 @@
     <string name="list_coin"><b>Список криптовалют</b></string>
     <string name="category"><b>Категории</b></string>
     <string name="description"><b>Описание</b></string>
+    <string name="text_eur">EUR</string>
+    <string name="text_usd">USD</string>
 </resources>
