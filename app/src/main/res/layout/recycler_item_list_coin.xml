@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/background_coin_item"
     android:layout_width="match_parent"
-    android:layout_height="56dp">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/image_coin_item"
-        android:layout_width="0dp"
+        android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="304dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/image_coin" />
@@ -22,59 +21,46 @@
         android:id="@+id/text_coin_item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="28dp"
-        android:text="Bitcoin"
+        android:layout_marginHorizontal="10dp"
         android:textColor="#525252"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/text_coin_course_item"
         app:layout_constraintStart_toEndOf="@+id/image_coin_item"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/image_coin_item"
+        tools:text="Bitcoin" />
 
     <TextView
         android:id="@+id/text_coin_abbreviated_item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="2dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="BTC"
         android:textColor="#9B9B9B"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/text_coin_course_percent_item"
         app:layout_constraintStart_toEndOf="@+id/image_coin_item"
-        app:layout_constraintTop_toBottomOf="@id/text_coin_item" />
+        app:layout_constraintTop_toBottomOf="@id/text_coin_item"
+        tools:text="BTC" />
 
     <TextView
         android:id="@+id/text_coin_course_item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginEnd="20dp"
         android:gravity="end"
-        android:text="$ 20000.74"
         android:textColor="#525252"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/image_coin_item"
+        tools:text="$ 20000.74" />
 
     <TextView
         android:id="@+id/text_coin_course_percent_item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="39dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="7dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="20dp"
         android:gravity="end"
-        android:text="+4.05%"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_coin_course_item"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:text="+4.05%" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
